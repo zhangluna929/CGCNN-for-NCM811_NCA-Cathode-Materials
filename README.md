@@ -6,6 +6,7 @@ conda env create -f environment.yml
 conda activate cgcnn_2023
 
 run_demo.bat
+```
 
 
 
