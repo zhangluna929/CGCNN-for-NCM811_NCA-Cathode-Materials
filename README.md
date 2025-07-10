@@ -13,9 +13,7 @@ run_demo.bat
 缺位: `make_li_vac.py` + pymatgen 删除首个 Li 
 补丁: pymatgen  `species.elements[0].Z` 
 
----
 
-## 结果
 
 ```
 Epoch: [0]  Loss 0.15  MAE 0.12
