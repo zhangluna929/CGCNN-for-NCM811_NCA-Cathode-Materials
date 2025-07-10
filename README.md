@@ -35,24 +35,6 @@
 
 ---
 
-## 文件结构 | Directory Structure
-
-```text
-cgcnn_project/
-├── cgcnn/
-│   ├── data.py          # Data loader / dataset
-│   ├── model.py         # CGCNN & CGCNNMulti
-│   └── __init__.py
-├── main.py              # Training (reg / cls / multi)
-├── predict.py           # Inference script
-├── vacancy_data/
-│   ├── id_prop.csv      # formation_energy, defect_label
-│   ├── atom_init.json   # Element embeddings
-│   ├── make_li_vac.py   # Generate Li-vacancy structures
-│   ├── *.cif            # Raw & augmented CIF files
-└── pre-trained/         # Official single-task models
-```
-
 ---
 
 ## 环境依赖 | Requirements
