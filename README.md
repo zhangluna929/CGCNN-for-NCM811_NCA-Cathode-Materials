@@ -9,9 +9,9 @@ run_demo.bat
 
 
 
-数据: NCM811 / NCA CIF |
-缺位生成: `make_li_vac.py` + pymatgen 删除首个 Li |
-补丁: pymatgen  `species.elements[0].Z` |
+材料: NCM811 / NCA CIF 
+缺位: `make_li_vac.py` + pymatgen 删除首个 Li 
+补丁: pymatgen  `species.elements[0].Z` 
 
 ---
 
@@ -37,7 +37,7 @@ Best MAE on test set = 0.06
 
 ---
 
-## 引用
+## 感谢
 
 - T. Xie & J. C. Grossman, “Crystal Graph Convolutional Neural Networks…”, *Phys. Rev. Lett.* **120**, 145301 (2018).  
 - S. Ong *et al.*, *pymatgen: Python Materials Genomics*, *Comp. Mater. Sci.* **68** 314–319 (2013).
