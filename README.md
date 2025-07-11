@@ -1,11 +1,10 @@
 # CGCNN-Ni: 高镍层状正极（NCM811 / NCA）图卷积预测与主动学习平台  
 # CGCNN-Ni: Crystal Graph Convolutional Neural Network Toolkit for High-Ni Layered Cathodes (NCM811, NCA)
 
-中英双语文档 / Bilingual Documentation (Chinese-English)
 
 ---
 
-## 项目亮点 (Highlights)
+##  Highlights
 
 中文 | English
 --- | ---
