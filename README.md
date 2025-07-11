@@ -15,25 +15,6 @@
 
 ---
 
-## 目录结构 (Directory Layout)
-
-```text
-cgcnn_project/
-├── cgcnn/                # Core library
-│   ├── data.py           # CIFData & collate_pool
-│   ├── model.py          # CrystalGraphConvNet / multi-task variant
-│   └── __init__.py
-├── main.py               # Training entry
-├── predict.py            # Importable inference utility
-├── active_learning.py    # Bayesian optimisation & active-learning demo
-├── pre-trained/          # Pre-trained checkpoints
-│   └── README.md         # Model catalogue (bilingual)
-├── vacancy_data/         # Li-vacancy example structures
-└── ...
-```
-
----
-
 ## 环境安装 (Installation)
 
 ```bash
