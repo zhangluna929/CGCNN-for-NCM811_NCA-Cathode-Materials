@@ -4,7 +4,7 @@
 
 ---
 
-##  Highlights
+## Highlights
 
 秒级多属性预测：9 个预训练模型（形成能、带隙、弹性模量等） | Instant property inference with nine pre-trained models (formation energy, band gap, elastic moduli, etc.)
 统一任务接口：支持回归、分类、多任务 | Unified interface for regression, classification and multi-task learning
