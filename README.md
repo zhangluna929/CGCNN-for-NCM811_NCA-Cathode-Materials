@@ -7,8 +7,11 @@
 ## Highlights
 
 秒级多属性预测：9 个预训练模型（形成能、带隙、弹性模量等）      Instant property inference with nine pre-trained models (formation energy, band gap, elastic moduli, etc.)
+
 统一任务接口：支持回归、分类、多任务              Unified interface for regression, classification and multi-task learning
+
 主动学习脚本：Bayesian Optimisation + MC-Dropout 不确定度              Built-in active-learning loop with Bayesian optimisation and MC-Dropout uncertainty
+
 易于微调：`predict.predict()` 可直接载入 `.pth.tar` 继续训练                 Easy fine-tuning via importable `predict.predict()`
 
 ---
