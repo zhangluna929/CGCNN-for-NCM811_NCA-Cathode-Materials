@@ -179,7 +179,6 @@ Nine pre-trained models based on Materials Project dataset:
 NCM811_NCA_Cgcnn_Project/
 ├── README.md                    # 项目说明文档 / Project documentation
 ├── LICENSE                      # MIT开源协议 / MIT license
-├── .gitignore                   # Git忽略文件 / Git ignore file
 ├── requirements.txt             # pip依赖文件 / pip requirements
 ├── environment.yml              # Conda环境配置 / Conda environment
 ├── atom_init.json              # 原子初始化参数 / Atom initialization parameters
