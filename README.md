@@ -1,11 +1,10 @@
 # CGCNN for High-Ni Cathode Materials
-# 高镍正极材料的晶体图卷积神经网络研究
+# 基于晶体图卷积神经网络的高镍层状正极材料物性预测与缺陷工程研究
 
 > Crystal Graph Convolutional Neural Networks for property prediction and defect engineering in high-Ni layered cathode materials (NCM811/NCA)  
-> 基于晶体图卷积神经网络的高镍层状正极材料物性预测与缺陷工程研究
 
 **Author**: lunazhang  
-**Date**: 2023  
+**Date**: 2024  
 
 ---
 
