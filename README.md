@@ -108,7 +108,6 @@ NCM811_LiVac0,-3.812,1
 
 ## 引用 (Citation)
 
-如果本项目对您有帮助，请引用 / If this toolkit helps your work, please cite:
 
 * T. Xie & J. C. Grossman, *Phys. Rev. Lett.* 120, 145301 (2018).
 * A. Jain et al., *APL Materials* 1, 011002 (2013).
