@@ -1,4 +1,4 @@
-# generated using pymatgen
+# NCM811 Li vacancy structure - lunazhang 2023
 data_Li2.796Mn0.297Co0.297Ni2.61O6
 _symmetry_space_group_name_H-M   'P 1'
 _cell_length_a   2.87190000

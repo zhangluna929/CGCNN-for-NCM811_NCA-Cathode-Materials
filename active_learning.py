@@ -1,3 +1,14 @@
+"""
+Active Learning Framework for Materials Discovery
+
+Bayesian optimization with CGCNN surrogate models for efficient
+materials design and property optimization. Combines uncertainty
+quantification with adaptive sampling strategies.
+
+Author: lunazhang
+Date: 2023
+"""
+
 import os
 import random
 import time

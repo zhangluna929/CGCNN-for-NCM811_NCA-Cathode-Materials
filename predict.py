@@ -1,6 +1,20 @@
+"""
+CGCNN Prediction Script
+
+Inference script for trained CGCNN models. Supports batch prediction
+with uncertainty estimation using Monte Carlo dropout sampling.
+
+Author: lunazhang  
+Date: 2023
+Usage: python predict.py model.pth.tar data_dir
+"""
+
+from __future__ import print_function, division
+
 import argparse
 import os
 import sys
+import warnings
 import time
 from typing import Dict, List, Tuple, Optional, Mapping
 import shutil  # needed for save_checkpoint legacy

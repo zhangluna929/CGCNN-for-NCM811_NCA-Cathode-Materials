@@ -1,4 +1,4 @@
-name: cgcnn_2023
+name: cgcnn
 channels:
   - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
   - defaults

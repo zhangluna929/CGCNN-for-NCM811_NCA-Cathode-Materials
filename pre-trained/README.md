@@ -87,6 +87,6 @@ If these models assist your work, please cite:
 
 ---
 
-*Maintainers / 维护*: open-source community.  Feel free to open issues or PRs for new high-Ni cathode models!  
-欢迎投稿分享面向高镍正极的新模型。
+*Author / 作者*: lunazhang  
+*Date / 日期*: 2023
 
