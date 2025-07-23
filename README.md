@@ -1,6 +1,6 @@
 # 基于CNGNN的高镍层状氧化物智能性质预测与缺陷筛选系统
 # Intelligent Property Prediction and Defect Engineering System for Ni-Rich Layered Oxides —— Multi-Scale Computational Platform Based on Crystal Graph Convolutional Neural Networks
-
+> **版本**: 4.1  **作者**: Luna Zhang  **项目建立**：2024-09-01  **最后更新**: 2025-07-17
 ---
 
 ##  项目简介 (Project Description)
@@ -71,9 +71,6 @@ python src/main.py vacancy_data --task regression --epochs 100
 ## 许可证 (License)
 MIT License – see `LICENSE` for details.
 
-## 作者 (Author)
-LunaZhang
-
 ## 项目拓展 (Future Work)
 - Support for more Ni-rich systems (NCMx90, NCA-F)  
 - Self-supervised pre-training to reduce annotation requirements  
@@ -95,7 +92,7 @@ LunaZhang
 │   └── utils.py          # Utility functions
 └── tests/                # Unit tests
 ```
-
+Have a nice day~
 
 
 
