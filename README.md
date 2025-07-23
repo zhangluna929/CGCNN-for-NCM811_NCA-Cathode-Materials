@@ -1,4 +1,4 @@
-# 高镍层状氧化物智能性质预测与缺陷工程系统 —— 基于晶体图卷积神经网络的多尺度计算平台
+# 基于CNGNN的高镍层状氧化物智能性质预测与缺陷筛选系统
 # Intelligent Property Prediction and Defect Engineering System for Ni-Rich Layered Oxides —— Multi-Scale Computational Platform Based on Crystal Graph Convolutional Neural Networks
 
 ---
