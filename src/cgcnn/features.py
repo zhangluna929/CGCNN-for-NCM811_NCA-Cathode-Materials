@@ -502,7 +502,6 @@ class AdvancedFeatureExtractor:
 
 # 使用示例
 def example_usage():
-    """使用示例"""
     # 创建特征提取器
     extractor = AdvancedFeatureExtractor()
     

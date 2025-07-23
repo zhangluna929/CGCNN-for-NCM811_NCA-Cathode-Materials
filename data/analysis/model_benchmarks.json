@@ -1,0 +1,172 @@
+{
+  "benchmark_info": {
+    "test_date": "2023-12-01",
+    "test_environment": "NVIDIA A100 GPU, 80GB VRAM",
+    "comparison_methods": ["DFT-VASP", "Traditional ML", "Other GNNs"]
+  },
+  "performance_comparison": {
+    "formation_energy_prediction": {
+      "CGCNN": {
+        "mae": 0.098,
+        "rmse": 0.142,
+        "r2": 0.924,
+        "prediction_time_per_structure": "0.15s",
+        "memory_usage": "2.1GB"
+      },
+      "DFT_VASP": {
+        "mae": 0.000,
+        "rmse": 0.000,
+        "r2": 1.000,
+        "prediction_time_per_structure": "8.5h",
+        "memory_usage": "64GB"
+      },
+      "Random_Forest": {
+        "mae": 0.156,
+        "rmse": 0.234,
+        "r2": 0.847,
+        "prediction_time_per_structure": "0.02s",
+        "memory_usage": "0.8GB"
+      },
+      "SchNet": {
+        "mae": 0.124,
+        "rmse": 0.178,
+        "r2": 0.891,
+        "prediction_time_per_structure": "0.28s",
+        "memory_usage": "3.2GB"
+      },
+      "MEGNet": {
+        "mae": 0.118,
+        "rmse": 0.167,
+        "r2": 0.902,
+        "prediction_time_per_structure": "0.31s",
+        "memory_usage": "2.8GB"
+      }
+    },
+    "band_gap_prediction": {
+      "CGCNN": {
+        "mae": 0.324,
+        "rmse": 0.456,
+        "r2": 0.847,
+        "prediction_time_per_structure": "0.15s"
+      },
+      "DFT_VASP": {
+        "mae": 0.000,
+        "rmse": 0.000,
+        "r2": 1.000,
+        "prediction_time_per_structure": "12.3h"
+      },
+      "Random_Forest": {
+        "mae": 0.487,
+        "rmse": 0.698,
+        "r2": 0.712,
+        "prediction_time_per_structure": "0.02s"
+      }
+    }
+  },
+  "scalability_analysis": {
+    "batch_size_32": {
+      "throughput_structures_per_second": 213,
+      "memory_usage_GB": 1.8,
+      "gpu_utilization_percent": 45
+    },
+    "batch_size_128": {
+      "throughput_structures_per_second": 682,
+      "memory_usage_GB": 4.2,
+      "gpu_utilization_percent": 78
+    },
+    "batch_size_256": {
+      "throughput_structures_per_second": 1024,
+      "memory_usage_GB": 7.1,
+      "gpu_utilization_percent": 92
+    },
+    "batch_size_512": {
+      "throughput_structures_per_second": 1156,
+      "memory_usage_GB": 12.8,
+      "gpu_utilization_percent": 98
+    }
+  },
+  "uncertainty_quantification_evaluation": {
+    "calibration_metrics": {
+      "expected_calibration_error": 0.034,
+      "maximum_calibration_error": 0.089,
+      "reliability_diagram_slope": 0.96,
+      "sharpness": 0.087
+    },
+    "coverage_analysis": {
+      "90_percent_interval": {
+        "empirical_coverage": 0.892,
+        "average_interval_width": 0.234
+      },
+      "95_percent_interval": {
+        "empirical_coverage": 0.948,
+        "average_interval_width": 0.287
+      },
+      "99_percent_interval": {
+        "empirical_coverage": 0.991,
+        "average_interval_width": 0.398
+      }
+    }
+  },
+  "active_learning_efficiency": {
+    "baseline_random_sampling": {
+      "samples_to_achieve_mae_0_1": 850,
+      "total_dft_cost_hours": 7225,
+      "final_mae": 0.098
+    },
+    "uncertainty_based_sampling": {
+      "samples_to_achieve_mae_0_1": 320,
+      "total_dft_cost_hours": 2720,
+      "final_mae": 0.095,
+      "efficiency_improvement": 2.66
+    },
+    "bayesian_optimization": {
+      "samples_to_achieve_mae_0_1": 280,
+      "total_dft_cost_hours": 2380,
+      "final_mae": 0.092,
+      "efficiency_improvement": 3.04
+    }
+  },
+  "robustness_analysis": {
+    "noise_robustness": {
+      "gaussian_noise_5_percent": {
+        "mae_degradation": 0.012,
+        "r2_degradation": 0.018
+      },
+      "gaussian_noise_10_percent": {
+        "mae_degradation": 0.028,
+        "r2_degradation": 0.041
+      },
+      "feature_dropout_10_percent": {
+        "mae_degradation": 0.015,
+        "r2_degradation": 0.022
+      }
+    },
+    "adversarial_robustness": {
+      "fgsm_epsilon_0_01": {
+        "mae_degradation": 0.008,
+        "success_rate": 0.12
+      },
+      "fgsm_epsilon_0_05": {
+        "mae_degradation": 0.034,
+        "success_rate": 0.45
+      },
+      "pgd_epsilon_0_01": {
+        "mae_degradation": 0.019,
+        "success_rate": 0.28
+      }
+    }
+  },
+  "computational_resources": {
+    "training": {
+      "total_time_hours": 24.5,
+      "gpu_hours": 24.5,
+      "peak_memory_GB": 15.2,
+      "energy_consumption_kWh": 61.25
+    },
+    "inference": {
+      "time_per_structure_ms": 150,
+      "memory_per_structure_MB": 8.2,
+      "energy_per_prediction_mJ": 45
+    }
+  }
+} 

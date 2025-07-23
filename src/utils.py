@@ -21,9 +21,7 @@ from sklearn.metrics import accuracy_score, precision_recall_fscore_support, roc
 
 
 def save_dict_to_json(data: Dict[str, Any], filepath: str) -> None:
-    """
-    将字典保存为JSON文件
-    Save dictionary to JSON file
+    """Save dictionary to JSON file
     
     Parameters
     ----------
@@ -216,7 +214,7 @@ def normalize_data(data: np.ndarray, mean: Optional[float] = None,
     if std is None:
         std = np.std(data)
     
-    normalized_data = (data - mean) / (std + 1e-8)  # 避免除零
+            normalized_data = (data - mean) / (std + 1e-8)
     return normalized_data, mean, std
 
 
@@ -428,7 +426,6 @@ class Timer:
         self.end_time = None
     
     def start(self) -> None:
-        """开始计时"""
         self.start_time = time.time()
     
     def stop(self) -> float:

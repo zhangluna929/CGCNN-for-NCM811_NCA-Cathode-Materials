@@ -1,0 +1,119 @@
+{
+  "database_info": {
+    "name": "High-Ni Cathode Materials Database",
+    "version": "1.0",
+    "created_date": "2023-12-01",
+    "description": "Comprehensive database of NCM811 and NCA materials with Li vacancies and dopants"
+  },
+  "materials": {
+    "NCM811_series": {
+      "base_composition": "LiNi0.8Co0.1Mn0.1O2",
+      "space_group": "R-3m",
+      "lattice_parameters": {
+        "a": 2.8745,
+        "c": 14.231
+      },
+      "variants": [
+        {
+          "id": "NCM811_LiVac0",
+          "description": "Pristine NCM811",
+          "li_vacancy_concentration": 0.0,
+          "formation_energy": 4.10,
+          "band_gap": 0.35,
+          "elastic_modulus": 170
+        },
+        {
+          "id": "NCM811_LiVac1",
+          "description": "NCM811 with 16.7% Li vacancy",
+          "li_vacancy_concentration": 0.167,
+          "formation_energy": 4.25,
+          "band_gap": 0.40,
+          "elastic_modulus": 165
+        },
+        {
+          "id": "NCM811_LiVac2",
+          "description": "NCM811 with 33.3% Li vacancy",
+          "li_vacancy_concentration": 0.333,
+          "formation_energy": 4.35,
+          "band_gap": 0.45,
+          "elastic_modulus": 160
+        }
+      ]
+    },
+    "NCA_series": {
+      "base_composition": "LiNi0.8Co0.15Al0.05O2",
+      "space_group": "R-3m",
+      "lattice_parameters": {
+        "a": 2.8682,
+        "c": 14.1985
+      },
+      "variants": [
+        {
+          "id": "NCA_LiVac0",
+          "description": "Pristine NCA",
+          "li_vacancy_concentration": 0.0,
+          "formation_energy": 3.80,
+          "band_gap": 0.50,
+          "elastic_modulus": 175
+        },
+        {
+          "id": "NCA_LiVac1",
+          "description": "NCA with 16.7% Li vacancy",
+          "li_vacancy_concentration": 0.167,
+          "formation_energy": 3.94,
+          "band_gap": 0.55,
+          "elastic_modulus": 172
+        },
+        {
+          "id": "NCA_LiVac2",
+          "description": "NCA with 33.3% Li vacancy",
+          "li_vacancy_concentration": 0.333,
+          "formation_energy": 4.05,
+          "band_gap": 0.60,
+          "elastic_modulus": 168
+        }
+      ]
+    },
+    "optimized_candidates": {
+      "description": "AI-optimized candidate materials from active learning",
+      "candidates": [
+        {
+          "id": "Candidate_01",
+          "base_material": "NCM811",
+          "optimization_target": "formation_energy",
+          "composition": "LiNi0.82Co0.09Mn0.09O2",
+          "predicted_formation_energy": 4.20,
+          "predicted_capacity": 198
+        },
+        {
+          "id": "Candidate_04",
+          "base_material": "NCA",
+          "optimization_target": "stability",
+          "composition": "LiNi0.81Co0.14Al0.05O2",
+          "predicted_formation_energy": 3.90,
+          "predicted_capacity": 186
+        }
+      ]
+    }
+  },
+  "experimental_conditions": {
+    "dft_parameters": {
+      "functional": "PBE",
+      "k_points": "6x6x2",
+      "energy_cutoff": "520 eV",
+      "convergence": "1e-6 eV"
+    },
+    "synthesis_conditions": {
+      "temperature_range": "800-900°C",
+      "atmosphere": "air",
+      "heating_rate": "5°C/min",
+      "cooling_rate": "natural cooling"
+    },
+    "electrochemical_testing": {
+      "voltage_range": "2.5-4.3 V",
+      "current_density": "C/5",
+      "temperature": "25°C",
+      "electrolyte": "1M LiPF6 in EC:DMC"
+    }
+  }
+} 

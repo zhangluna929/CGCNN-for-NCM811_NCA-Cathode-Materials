@@ -99,7 +99,6 @@ class CIFData(Dataset):
         # 获取原子特征
         atom_fea = np.vstack([self.atom_init[atom.specie.number] for atom in crystal])
         
-        # 获取邻居信息
         all_nbrs = crystal.get_all_neighbors(self.radius, include_index=True)
         all_nbrs = [sorted(nbrs, key=lambda x: x[1]) for nbrs in all_nbrs]
         

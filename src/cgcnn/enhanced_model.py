@@ -420,14 +420,12 @@ class EnhancedCGCNN(nn.Module):
     
     def _standard_pooling(self, atom_fea: torch.Tensor, 
                          crystal_atom_idx: List[torch.Tensor]) -> torch.Tensor:
-        """标准全局平均池化"""
         assert sum([len(idx_map) for idx_map in crystal_atom_idx]) == atom_fea.size(0)
         summed_fea = [torch.mean(atom_fea[idx_map], dim=0, keepdim=True)
                       for idx_map in crystal_atom_idx]
         return torch.cat(summed_fea, dim=0)
     
     def _initialize_weights(self):
-        """权重初始化"""
         for module in self.modules():
             if isinstance(module, nn.Linear):
                 nn.init.xavier_uniform_(module.weight)
@@ -509,7 +507,6 @@ class PhysicsInformedLoss(nn.Module):
     
     def _calculate_physics_constraints(self, predictions: torch.Tensor, 
                                      property_type: str) -> torch.Tensor:
-        """计算物理约束"""
         if property_type == 'formation_energy':
             # 形成能的物理约束：绝大多数情况下应为负值
             positive_penalty = torch.relu(predictions).mean()
@@ -531,7 +528,6 @@ class PhysicsInformedLoss(nn.Module):
 
 # 使用示例和测试
 def example_usage():
-    """使用示例"""
     # 创建增强的CGCNN模型
     model = EnhancedCGCNN(
         orig_atom_fea_len=92,

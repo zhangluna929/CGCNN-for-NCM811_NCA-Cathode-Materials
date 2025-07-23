@@ -29,7 +29,6 @@ from torch.utils.data import DataLoader
 from cgcnn.data import CIFData, collate_pool
 from cgcnn.model import CrystalGraphConvNet, CrystalGraphConvNetMulti
 
-# 设置随机种子
 def set_random_seed(seed=123):
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)

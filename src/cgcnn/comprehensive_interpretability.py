@@ -53,7 +53,6 @@ class AtomicFeatureAnalyzer:
         self.logger = logging.getLogger(__name__)
     
     def _default_feature_names(self) -> List[str]:
-        """默认原子特征名称"""
         # 基于常见的原子描述符
         feature_names = []
         
@@ -122,7 +121,6 @@ class AtomicFeatureAnalyzer:
     
     def _integrated_gradients_analysis(self, input_data: Tuple, 
                                      structure: Optional[Structure]) -> Dict[str, Any]:
-        """集成梯度分析"""
         atom_fea, nbr_fea, nbr_fea_idx, crystal_atom_idx = input_data
         
         # 创建基线（零特征）
@@ -199,7 +197,6 @@ class AtomicFeatureAnalyzer:
     
     def _attention_analysis(self, input_data: Tuple, 
                           structure: Optional[Structure]) -> Dict[str, Any]:
-        """注意力权重分析"""
         # 这需要模型支持注意力权重提取
         if not hasattr(self.model, 'get_attention_weights'):
             self.logger.warning("Model does not support attention weight extraction")
@@ -232,7 +229,6 @@ class AtomicFeatureAnalyzer:
     
     def _occlusion_analysis(self, input_data: Tuple, 
                           structure: Optional[Structure]) -> Dict[str, Any]:
-        """遮挡分析"""
         atom_fea, nbr_fea, nbr_fea_idx, crystal_atom_idx = input_data
         
         # 原始预测
@@ -277,7 +273,6 @@ class AtomicFeatureAnalyzer:
         return analysis_results
     
     def _calculate_attention_entropy(self, attention_matrix: np.ndarray) -> float:
-        """计算注意力熵"""
         # 归一化注意力权重
         attention_flat = attention_matrix.flatten()
         attention_prob = attention_flat / (np.sum(attention_flat) + 1e-8)
@@ -288,7 +283,6 @@ class AtomicFeatureAnalyzer:
     
     def _identify_focused_atoms(self, attention_matrix: np.ndarray, 
                               top_k: int = 5) -> List[int]:
-        """识别注意力集中的原子"""
         # 计算每个原子的总注意力权重
         atom_attention = np.sum(attention_matrix, axis=1)
         
@@ -351,7 +345,6 @@ class ChemicalBondAnalyzer:
         return bond_analysis
     
     def _analyze_neighbor_importance(self, input_data: Tuple) -> Dict[str, Any]:
-        """分析邻居重要性"""
         atom_fea, nbr_fea, nbr_fea_idx, crystal_atom_idx = input_data
         
         # 计算邻居特征的梯度
@@ -392,7 +385,6 @@ class ChemicalBondAnalyzer:
     
     def _analyze_bond_types(self, input_data: Tuple, 
                           structure: Structure) -> Dict[str, Any]:
-        """分析化学键类型"""
         if not PYMATGEN_AVAILABLE:
             return {'error': 'PyMatGen not available'}
         
@@ -405,7 +397,7 @@ class ChemicalBondAnalyzer:
         
         for atom_idx, site in enumerate(structure):
             try:
-                # 获取邻居信息
+        
                 nn_info = crystal_nn.get_nn_info(structure, atom_idx)
                 
                 for neighbor_info in nn_info:
@@ -455,7 +447,6 @@ class ChemicalBondAnalyzer:
     
     def _calculate_single_bond_contribution(self, input_data: Tuple, 
                                           atom_idx: int, nbr_idx: int) -> float:
-        """计算单个化学键的贡献"""
         atom_fea, nbr_fea, nbr_fea_idx, crystal_atom_idx = input_data
         
         # 原始预测
@@ -477,7 +468,6 @@ class ChemicalBondAnalyzer:
         return contribution
     
     def _analyze_distance_effects(self, input_data: Tuple) -> Dict[str, Any]:
-        """分析距离效应"""
         atom_fea, nbr_fea, nbr_fea_idx, crystal_atom_idx = input_data
         
         # 假设邻居特征的第一维是距离相关特征
@@ -520,7 +510,6 @@ class ChemicalBondAnalyzer:
     
     def _analyze_coordination_environment(self, input_data: Tuple, 
                                         structure: Optional[Structure]) -> Dict[str, Any]:
-        """分析配位环境"""
         atom_fea, nbr_fea, nbr_fea_idx, crystal_atom_idx = input_data
         
         coordination_analysis = {
@@ -548,7 +537,6 @@ class ChemicalBondAnalyzer:
         return coordination_analysis
     
     def _calculate_coordination_contribution(self, input_data: Tuple, atom_idx: int) -> float:
-        """计算配位环境贡献"""
         atom_fea, nbr_fea, nbr_fea_idx, crystal_atom_idx = input_data
         
         # 原始预测
@@ -567,7 +555,6 @@ class ChemicalBondAnalyzer:
         return abs(original_pred - modified_pred)
     
     def _classify_coordination_environments(self, structure: Structure) -> Dict[str, Any]:
-        """分类配位环境"""
         try:
             crystal_nn = CrystalNN()
             environment_types = {}
@@ -670,7 +657,6 @@ class PhysicsMechanismVisualizer:
         return visualization_results
     
     def _create_atomic_importance_heatmap(self, atomic_analysis: Dict) -> plt.Figure:
-        """创建原子重要性热图"""
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
         
         # 原子重要性矩阵
@@ -709,7 +695,6 @@ class PhysicsMechanismVisualizer:
     
     def _create_bond_network_plot(self, bond_analysis: Dict, 
                                 structure: Optional[Structure]) -> plt.Figure:
-        """创建化学键网络图"""
         fig, ax = plt.subplots(1, 1, figsize=(12, 10))
         
         if 'bond_importance_matrix' in bond_analysis:
@@ -761,7 +746,6 @@ class PhysicsMechanismVisualizer:
         return fig
     
     def _create_feature_importance_plot(self, atomic_analysis: Dict) -> plt.Figure:
-        """创建特征重要性图"""
         fig, axes = plt.subplots(2, 2, figsize=(15, 12))
         
         if 'atom_feature_importance' in atomic_analysis:
@@ -941,7 +925,6 @@ class PhysicsMechanismVisualizer:
         return fig
     
     def _categorize_features(self, features: List[str]) -> Dict[str, List[str]]:
-        """特征分类"""
         categories = {
             'atomic_properties': [],
             'electronic_structure': [],
@@ -967,7 +950,6 @@ class PhysicsMechanismVisualizer:
         return categories
     
     def _get_feature_category(self, feature: str) -> str:
-        """获取特征类别"""
         feature_lower = feature.lower()
         
         if any(prop in feature_lower for prop in ['atomic_number', 'atomic_mass', 'radius']):
@@ -982,7 +964,6 @@ class PhysicsMechanismVisualizer:
             return 'Other'
     
     def _save_visualizations(self, visualization_results: Dict, save_path: str):
-        """保存可视化结果"""
         import os
         
         # 创建保存目录
@@ -1115,7 +1096,6 @@ class ComprehensiveInterpretabilitySystem:
     
     def _generate_insights(self, results: Dict[str, Any], 
                          structure: Optional[Structure]) -> Dict[str, Any]:
-        """生成洞察和建议"""
         insights = {
             'insights': {},
             'recommendations': []
@@ -1172,7 +1152,6 @@ class ComprehensiveInterpretabilitySystem:
         return insights
     
     def _analyze_atomic_insights(self, atomic_analysis: Dict) -> Dict[str, Any]:
-        """分析原子洞察"""
         insights = {}
         
         # 寻找主导原子
@@ -1202,7 +1181,6 @@ class ComprehensiveInterpretabilitySystem:
         return insights
     
     def _analyze_bond_insights(self, bond_analysis: Dict) -> Dict[str, Any]:
-        """分析化学键洞察"""
         insights = {}
         
         if 'bond_type_contributions' in bond_analysis:
@@ -1230,7 +1208,6 @@ class ComprehensiveInterpretabilitySystem:
         return insights
     
     def _save_analysis_results(self, results: Dict[str, Any], save_path: str):
-        """保存分析结果"""
         import os
         import json
         
@@ -1253,7 +1230,6 @@ class ComprehensiveInterpretabilitySystem:
         self.logger.info(f"Analysis results saved to {save_path}")
     
     def _make_serializable(self, obj: Any) -> Any:
-        """使对象可序列化"""
         if isinstance(obj, dict):
             return {k: self._make_serializable(v) for k, v in obj.items() 
                    if not k.startswith('visualization')}  # 跳过可视化对象
@@ -1269,7 +1245,6 @@ class ComprehensiveInterpretabilitySystem:
             return obj
     
     def _generate_text_report(self, results: Dict[str, Any]) -> str:
-        """生成文本报告"""
         report = "=== 材料性质预测可解释性分析报告 ===\n\n"
         
         # 预测结果
@@ -1340,7 +1315,6 @@ class ComprehensiveInterpretabilitySystem:
 
 # 使用示例
 def example_usage():
-    """使用示例"""
     from cgcnn.enhanced_model import EnhancedCGCNN
     
     # 创建模型

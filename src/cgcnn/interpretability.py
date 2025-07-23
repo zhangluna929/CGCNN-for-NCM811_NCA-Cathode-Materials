@@ -43,7 +43,6 @@ class GradCAM:
         self._register_hooks()
     
     def _register_hooks(self):
-        """注册前向和反向钩子"""
         def forward_hook(module, input, output):
             self.activations = output.detach()
         
@@ -110,7 +109,6 @@ class GradCAM:
             return torch.zeros(1)
     
     def cleanup(self):
-        """清理钩子"""
         for hook in self.hooks:
             hook.remove()
 
@@ -129,7 +127,6 @@ class AttentionVisualization:
         self._register_attention_hooks()
     
     def _register_attention_hooks(self):
-        """注册注意力权重提取钩子"""
         def attention_hook(name):
             def hook(module, input, output):
                 # 假设输出包含注意力权重
@@ -185,7 +182,6 @@ class AttentionVisualization:
     
     def _plot_attention_matrix(self, attention_matrix: np.ndarray, structure: Structure, 
                               save_path: str):
-        """绘制注意力矩阵"""
         plt.figure(figsize=(10, 8))
         plt.imshow(attention_matrix, cmap='Blues', interpolation='nearest')
         plt.colorbar(label='Attention Weight')
@@ -204,7 +200,6 @@ class AttentionVisualization:
         plt.close()
     
     def cleanup(self):
-        """清理钩子"""
         for hook in self.hooks:
             hook.remove()
 
@@ -568,14 +563,12 @@ class ModelExplainer:
         plt.close()
     
     def cleanup(self):
-        """清理资源"""
         self.grad_cam.cleanup()
         self.attention_viz.cleanup()
 
 
 # 使用示例
 def example_usage():
-    """使用示例"""
     # 创建解释器
     # model = CrystalGraphConvNet(...)
     # explainer = ModelExplainer(model)

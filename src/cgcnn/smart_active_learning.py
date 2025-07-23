@@ -36,7 +36,6 @@ from .advanced_uncertainty import UncertaintyDecomposer, UncertaintyGuidedActive
 
 @dataclass
 class StructureCandidate:
-    """结构候选样本数据类"""
     id: str
     structure_data: Any
     features: np.ndarray
@@ -112,7 +111,6 @@ class AdvancedAcquisitionFunction:
     def _multi_criteria_acquisition(self, candidates: List[StructureCandidate],
                                   current_best: float,
                                   existing_dataset: Optional[List[Any]]) -> np.ndarray:
-        """多准则采集函数"""
         n_candidates = len(candidates)
         scores = np.zeros(n_candidates)
         
@@ -137,21 +135,17 @@ class AdvancedAcquisitionFunction:
                 self.uncertainty_weight * uncertainty_scores[i] +
                 self.diversity_weight * diversity_scores[i] +
                 self.improvement_weight * improvement_scores[i] +
-                0.1 * epistemic_ratios[i]  # 偏向认识不确定性高的样本
+                0.1 * epistemic_ratios[i]
             )
         
         return scores
     
     def _calculate_diversity_scores(self, candidates: List[StructureCandidate],
                                   existing_dataset: Optional[List[Any]]) -> np.ndarray:
-        """计算多样性分数"""
         if not existing_dataset or not SKLEARN_AVAILABLE:
             return np.ones(len(candidates))
         
-        # 提取候选结构的特征
         candidate_features = np.array([c.features for c in candidates])
-        
-        # 计算与现有数据集的相似性
         diversity_scores = np.zeros(len(candidates))
         
         for i, candidate in enumerate(candidates):
@@ -174,7 +168,6 @@ class AdvancedAcquisitionFunction:
     
     def _calculate_expected_improvement(self, candidates: List[StructureCandidate],
                                      current_best: float) -> np.ndarray:
-        """计算期望改进"""
         improvement_scores = np.zeros(len(candidates))
         
         for i, candidate in enumerate(candidates):
@@ -199,11 +192,10 @@ class AdvancedAcquisitionFunction:
         return improvement_scores
     
     def _thompson_sampling_acquisition(self, candidates: List[StructureCandidate]) -> np.ndarray:
-        """汤普森采样"""
         scores = np.zeros(len(candidates))
         
         for i, candidate in enumerate(candidates):
-            # 从预测分布中采样
+    
             if candidate.uncertainty > 0:
                 sampled_value = np.random.normal(candidate.predicted_property, 
                                                candidate.uncertainty)
@@ -216,12 +208,10 @@ class AdvancedAcquisitionFunction:
     
     def _expected_improvement_acquisition(self, candidates: List[StructureCandidate],
                                         current_best: float) -> np.ndarray:
-        """期望改进采集"""
         return self._calculate_expected_improvement(candidates, current_best)
     
     def _ucb_acquisition(self, candidates: List[StructureCandidate], 
                         exploration_factor: float = 2.0) -> np.ndarray:
-        """上置信界采集"""
         scores = np.array([
             c.predicted_property + exploration_factor * c.uncertainty 
             for c in candidates
@@ -230,7 +220,6 @@ class AdvancedAcquisitionFunction:
     
     def update_strategy_performance(self, selected_indices: List[int],
                                   performance_improvement: float):
-        """更新策略性能"""
         self.performance_tracker[self.strategy].append(performance_improvement)
         
         # 自适应策略调整
@@ -243,8 +232,7 @@ class AdvancedAcquisitionFunction:
                 self._adjust_weights()
     
     def _adjust_weights(self):
-        """自适应调整权重"""
-        # 简单的权重调整策略
+
         if self.uncertainty_weight > 0.2:
             self.uncertainty_weight -= 0.1
             self.diversity_weight += 0.05
@@ -310,7 +298,6 @@ class IncrementalLearning:
         return update_metrics
     
     def _create_training_batch(self, new_samples: List[Tuple]) -> List[Tuple]:
-        """创建训练批次"""
         training_batch = list(new_samples)
         
         # 添加记忆回放样本以防止灾难性遗忘
@@ -326,7 +313,6 @@ class IncrementalLearning:
         return training_batch
     
     def _incremental_update(self, training_batch: List[Tuple]) -> Dict[str, float]:
-        """执行增量更新"""
         self.model.train()
         
         total_loss = 0.0
@@ -358,7 +344,6 @@ class IncrementalLearning:
         }
     
     def _validate_performance(self, validation_data: List[Tuple]) -> Dict[str, float]:
-        """验证模型性能"""
         self.model.eval()
         
         total_loss = 0.0
@@ -383,12 +368,10 @@ class IncrementalLearning:
     def detect_catastrophic_forgetting(self, baseline_performance: float,
                                      current_performance: float,
                                      threshold: float = 0.1) -> bool:
-        """检测灾难性遗忘"""
         performance_drop = baseline_performance - current_performance
         return performance_drop > threshold
     
     def adapt_learning_rate(self, performance_trend: List[float]):
-        """自适应学习率调整"""
         if len(performance_trend) >= 3:
             recent_trend = performance_trend[-3:]
             
@@ -479,7 +462,6 @@ class OnlineDFTIntegration:
         return job_id
     
     def _calculate_priority(self, candidate: StructureCandidate) -> str:
-        """计算任务优先级"""
         if candidate.uncertainty > self.priority_threshold * 2:
             return 'high'
         elif candidate.uncertainty > self.priority_threshold:
@@ -488,7 +470,6 @@ class OnlineDFTIntegration:
             return 'low'
     
     def _start_workers(self):
-        """启动工作线程"""
         for i in range(self.max_concurrent_jobs):
             worker = threading.Thread(
                 target=self._worker_loop,
@@ -499,7 +480,6 @@ class OnlineDFTIntegration:
             self.worker_threads.append(worker)
     
     def _worker_loop(self, worker_id: int):
-        """工作线程循环"""
         self.logger.info(f"DFT worker {worker_id} started")
         
         while not self.shutdown_flag.is_set():
@@ -581,7 +561,6 @@ class OnlineDFTIntegration:
         return base_value + noise
     
     def _trigger_callbacks(self, dft_job: DFTJob):
-        """触发结果回调"""
         for job_id, callback in self.result_callbacks:
             if job_id == dft_job.job_id:
                 try:
@@ -590,7 +569,6 @@ class OnlineDFTIntegration:
                     self.logger.error(f"Callback error for job {job_id}: {e}")
     
     def get_job_status(self, job_id: str) -> Optional[str]:
-        """获取任务状态"""
         if job_id in self.active_jobs:
             return self.active_jobs[job_id].status
         elif job_id in self.completed_jobs:
@@ -601,7 +579,6 @@ class OnlineDFTIntegration:
             return None
     
     def get_job_result(self, job_id: str) -> Optional[float]:
-        """获取任务结果"""
         if job_id in self.completed_jobs:
             return self.completed_jobs[job_id].dft_result
         else:
@@ -725,7 +702,6 @@ class SmartActiveLearningSystem:
     
     def _evaluate_candidates(self, candidate_pool: List[Any], 
                            property_type: str) -> List[StructureCandidate]:
-        """评估候选结构"""
         structure_candidates = []
         
         for i, structure_data in enumerate(candidate_pool):
@@ -764,7 +740,6 @@ class SmartActiveLearningSystem:
     
     def _predict_structure_property(self, structure_data: Any, 
                                   property_type: str) -> Dict[str, float]:
-        """预测结构性质"""
         # 这里需要根据实际的数据格式进行调整
         self.model.eval()
         
@@ -777,7 +752,6 @@ class SmartActiveLearningSystem:
         }
     
     def _extract_structure_features(self, structure_data: Any) -> np.ndarray:
-        """提取结构特征"""
         # 简化的特征提取
         # 实际应用中应该提取更丰富的结构描述符
         
@@ -797,7 +771,6 @@ class SmartActiveLearningSystem:
         return features
     
     def _get_current_best_value(self, property_type: str) -> float:
-        """获取当前最佳值"""
         # 简化实现：返回历史性能的最佳值
         if self.performance_history:
             # 这里应该根据具体的性质类型和目标（最大化或最小化）来确定
@@ -850,7 +823,6 @@ class SmartActiveLearningSystem:
             pass
     
     def _calculate_performance_improvement(self) -> float:
-        """计算性能改进"""
         if len(self.performance_history) < 2:
             return 0.0
         
@@ -862,7 +834,6 @@ class SmartActiveLearningSystem:
         return current_best - previous_best
     
     def get_learning_statistics(self) -> Dict[str, Any]:
-        """获取学习统计信息"""
         stats = {
             'total_iterations': self.iteration_count,
             'total_structures_selected': len(self.selected_structures),
@@ -879,7 +850,6 @@ class SmartActiveLearningSystem:
         return stats
     
     def shutdown(self):
-        """关闭主动学习系统"""
         if self.dft_integration:
             self.dft_integration.shutdown()
         
@@ -888,7 +858,6 @@ class SmartActiveLearningSystem:
 
 # 使用示例
 def example_usage():
-    """使用示例"""
     # 创建模型和不确定性分解器
     from .enhanced_model import EnhancedCGCNN
     from .advanced_uncertainty import UncertaintyDecomposer, BayesianCGCNN

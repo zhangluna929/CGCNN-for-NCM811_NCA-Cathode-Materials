@@ -107,7 +107,6 @@ class AtomicScaleModule(nn.Module):
 
 
 class AtomicConvLayer(nn.Module):
-    """原子卷积层"""
     
     def __init__(self, atom_fea_len: int):
         super(AtomicConvLayer, self).__init__()
@@ -263,7 +262,6 @@ class NanoscaleModule(nn.Module):
 
 
 class NanoConvLayer(nn.Module):
-    """纳米卷积层"""
     
     def __init__(self, feature_dim: int):
         super(NanoConvLayer, self).__init__()
@@ -734,7 +732,6 @@ class MultiScaleFramework(nn.Module):
     
     def _compute_atomic_loss(self, atomic_outputs: Dict[str, torch.Tensor],
                            atomic_targets: Dict[str, torch.Tensor]) -> torch.Tensor:
-        """计算原子尺度损失"""
         atomic_loss = 0.0
         n_properties = 0
         
@@ -748,7 +745,6 @@ class MultiScaleFramework(nn.Module):
     
     def _compute_nano_loss(self, nano_outputs: Dict[str, torch.Tensor],
                           nano_targets: Dict[str, torch.Tensor]) -> torch.Tensor:
-        """计算纳米尺度损失"""
         nano_loss = 0.0
         n_properties = 0
         
@@ -762,7 +758,6 @@ class MultiScaleFramework(nn.Module):
     
     def _compute_macro_loss(self, macro_outputs: Dict[str, torch.Tensor],
                            macro_targets: Dict[str, torch.Tensor]) -> torch.Tensor:
-        """计算宏观尺度损失"""
         macro_loss = 0.0
         n_properties = 0
         
@@ -921,7 +916,6 @@ class MultiScaleAnalyzer:
         return analysis_results
     
     def _analyze_scale_predictions(self, outputs: Dict[str, torch.Tensor]) -> Dict[str, Any]:
-        """分析各尺度预测"""
         scale_predictions = {}
         
         # 原子尺度预测
@@ -958,7 +952,6 @@ class MultiScaleAnalyzer:
         return scale_predictions
     
     def _analyze_scale_contributions(self, outputs: Dict[str, torch.Tensor]) -> Dict[str, Any]:
-        """分析尺度贡献"""
         contributions = outputs['fused_predictions']['scale_contributions']
         
         contribution_analysis = {
@@ -973,7 +966,6 @@ class MultiScaleAnalyzer:
         return contribution_analysis
     
     def _analyze_coupling_effects(self, outputs: Dict[str, torch.Tensor]) -> Dict[str, Any]:
-        """分析耦合效应"""
         coupling_effects = outputs['nanoscale']['coupling_effects']
         
         coupling_analysis = {
@@ -986,7 +978,6 @@ class MultiScaleAnalyzer:
         return coupling_analysis
     
     def _analyze_property_correlations(self, outputs: Dict[str, torch.Tensor]) -> Dict[str, Any]:
-        """分析属性相关性"""
         # 收集所有数值属性
         all_properties = {}
         
@@ -1024,7 +1015,6 @@ class MultiScaleAnalyzer:
         return correlation_analysis
     
     def _calculate_entropy(self, values: List[float]) -> float:
-        """计算熵"""
         values = np.array(values)
         values = values / np.sum(values)  # 归一化
         entropy = -np.sum(values * np.log(values + 1e-8))
@@ -1032,7 +1022,6 @@ class MultiScaleAnalyzer:
     
     def generate_multi_scale_report(self, analysis_results: Dict[str, Any],
                                   save_path: Optional[str] = None) -> str:
-        """生成多尺度分析报告"""
         report = "=== 多尺度材料建模分析报告 ===\n\n"
         
         # 1. 各尺度预测摘要
@@ -1097,7 +1086,6 @@ class MultiScaleAnalyzer:
 
 # 使用示例
 def example_usage():
-    """使用示例"""
     # 创建多尺度框架
     framework = MultiScaleFramework(
         orig_atom_fea_len=92,

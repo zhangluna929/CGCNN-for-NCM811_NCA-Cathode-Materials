@@ -72,7 +72,6 @@ class AdversarialTrainer:
     
     def _fgsm_attack(self, input_data: Tuple, targets: torch.Tensor,
                     criterion: nn.Module) -> Tuple:
-        """快速梯度符号方法攻击"""
         atom_fea, nbr_fea, nbr_fea_idx, crystal_atom_idx = input_data
         
         # 复制数据并设置requires_grad
@@ -109,7 +108,6 @@ class AdversarialTrainer:
     
     def _pgd_attack(self, input_data: Tuple, targets: torch.Tensor,
                    criterion: nn.Module) -> Tuple:
-        """投影梯度下降攻击"""
         atom_fea, nbr_fea, nbr_fea_idx, crystal_atom_idx = input_data
         
         # 初始化对抗样本
@@ -156,7 +154,6 @@ class AdversarialTrainer:
     
     def _materials_aware_attack(self, input_data: Tuple, targets: torch.Tensor,
                               criterion: nn.Module) -> Tuple:
-        """材料感知对抗攻击"""
         atom_fea, nbr_fea, nbr_fea_idx, crystal_atom_idx = input_data
         
         # 识别重要特征维度
@@ -199,7 +196,6 @@ class AdversarialTrainer:
                 nbr_fea_idx, crystal_atom_idx)
     
     def _identify_important_atom_features(self, input_data: Tuple) -> List[int]:
-        """识别重要的原子特征维度"""
         # 简化实现：基于特征方差选择重要维度
         atom_fea = input_data[0]
         feature_variance = torch.var(atom_fea, dim=0)
@@ -211,7 +207,6 @@ class AdversarialTrainer:
         return important_indices.tolist()
     
     def _identify_important_neighbor_features(self, input_data: Tuple) -> List[int]:
-        """识别重要的邻居特征维度"""
         nbr_fea = input_data[1]
         feature_variance = torch.var(nbr_fea.view(-1, nbr_fea.size(-1)), dim=0)
         
@@ -224,7 +219,6 @@ class AdversarialTrainer:
                                   adv_nbr_fea: torch.Tensor,
                                   orig_atom_fea: torch.Tensor,
                                   orig_nbr_fea: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
-        """应用物理约束"""
         # 限制扰动幅度以保持物理合理性
         max_atom_change = 0.2  # 最大20%变化
         max_nbr_change = 0.15   # 最大15%变化
@@ -247,7 +241,6 @@ class AdversarialTrainer:
                                             adv_nbr_fea: torch.Tensor,
                                             orig_atom_fea: torch.Tensor,
                                             orig_nbr_fea: torch.Tensor) -> Tuple[torch.Tensor, torch.Tensor]:
-        """应用材料特定约束"""
         # 确保某些特征保持非负（如原子电荷、键长等）
         # 这里假设前10个原子特征应该非负
         adv_atom_fea[:, :10] = torch.clamp(adv_atom_fea[:, :10], min=0)
@@ -317,7 +310,6 @@ class NoiseRobustnessTrainer:
     
     def _add_experimental_noise(self, features: torch.Tensor, 
                               base_noise_level: float) -> torch.Tensor:
-        """添加实验误差噪声"""
         noisy_features = features.clone()
         
         # 不同类型的特征有不同的噪声水平
@@ -342,7 +334,6 @@ class NoiseRobustnessTrainer:
         return noisy_features
     
     def create_noise_schedule(self, n_epochs: int) -> List[Tuple[str, float]]:
-        """创建噪声调度"""
         schedule = []
         
         for epoch in range(n_epochs):
@@ -409,7 +400,6 @@ class EnsembleTrainer:
         return diverse_models
     
     def _modify_architecture(self, base_config: Dict[str, Any], model_id: int) -> Dict[str, Any]:
-        """修改模型架构以增加多样性"""
         config = base_config.copy()
         
         # 随机调整架构参数
@@ -427,7 +417,6 @@ class EnsembleTrainer:
         return config
     
     def _modify_hyperparameters(self, base_config: Dict[str, Any], model_id: int) -> Dict[str, Any]:
-        """修改超参数以增加多样性"""
         config = base_config.copy()
         
         # 不同的dropout率
@@ -437,7 +426,6 @@ class EnsembleTrainer:
         return config
     
     def _apply_diverse_initialization(self, model: nn.Module, model_id: int):
-        """应用多样化初始化"""
         init_methods = ['xavier_uniform', 'xavier_normal', 'kaiming_uniform', 'kaiming_normal', 'orthogonal']
         init_method = init_methods[model_id % len(init_methods)]
         
@@ -505,7 +493,6 @@ class EnsembleTrainer:
     
     def _train_single_model(self, model: nn.Module, train_loader, val_loader,
                            optimizer, criterion, n_epochs: int, device: str) -> Dict[str, float]:
-        """训练单个模型"""
         best_val_loss = float('inf')
         
         for epoch in range(n_epochs):
@@ -540,7 +527,6 @@ class EnsembleTrainer:
     
     def _evaluate_single_model(self, model: nn.Module, val_loader, 
                               criterion, device: str) -> float:
-        """评估单个模型"""
         model.eval()
         total_loss = 0.0
         n_batches = 0
@@ -560,7 +546,6 @@ class EnsembleTrainer:
         return total_loss / max(n_batches, 1)
     
     def _evaluate_ensemble(self, val_loader, device: str) -> Dict[str, float]:
-        """评估集成性能"""
         all_predictions = []
         all_targets = []
         
@@ -585,14 +570,14 @@ class EnsembleTrainer:
         # 计算集成预测
         ensemble_predictions = np.mean(all_predictions, axis=0)
         
-        # 计算性能指标
+
         mse = np.mean((ensemble_predictions.flatten() - np.array(all_targets).flatten()) ** 2)
         mae = np.mean(np.abs(ensemble_predictions.flatten() - np.array(all_targets).flatten()))
         
         return {'ensemble_mse': mse, 'ensemble_mae': mae}
     
     def _calculate_diversity_metrics(self, val_loader, device: str) -> Dict[str, float]:
-        """计算集成多样性指标"""
+
         all_predictions = []
         
         # 收集预测
@@ -669,7 +654,6 @@ class DomainAdaptationTrainer:
     
     def _fine_tuning_adaptation(self, source_model: nn.Module, 
                                target_data: Any, epochs: int) -> nn.Module:
-        """微调适应"""
         adapted_model = copy.deepcopy(source_model)
         
         # 冻结早期层，只微调后面的层
@@ -695,7 +679,6 @@ class DomainAdaptationTrainer:
     
     def _dann_adaptation(self, source_model: nn.Module, 
                         source_data: Any, target_data: Any, epochs: int) -> nn.Module:
-        """域对抗神经网络适应"""
         # DANN需要域分类器
         class DomainClassifier(nn.Module):
             def __init__(self, feature_dim: int):
@@ -917,7 +900,6 @@ class RobustTrainingOrchestrator:
         return robustness_metrics
     
     def _evaluate_clean_performance(self, test_loader, device: str) -> Dict[str, float]:
-        """评估清洁数据性能"""
         total_loss = 0.0
         all_predictions = []
         all_targets = []
@@ -946,7 +928,6 @@ class RobustTrainingOrchestrator:
         return {'mse': mse, 'mae': mae}
     
     def _evaluate_adversarial_robustness(self, test_loader, device: str) -> Dict[str, float]:
-        """评估对抗鲁棒性"""
         criterion = nn.MSELoss()
         
         # 不同攻击强度下的性能
@@ -981,7 +962,6 @@ class RobustTrainingOrchestrator:
         return adv_metrics
     
     def _evaluate_noise_robustness(self, test_loader, device: str) -> Dict[str, float]:
-        """评估噪声鲁棒性"""
         criterion = nn.MSELoss()
         
         noise_levels = [0.01, 0.05, 0.1, 0.2]
@@ -1017,7 +997,6 @@ class RobustTrainingOrchestrator:
         return noise_metrics
     
     def _calculate_overall_robustness_score(self, metrics: Dict[str, Any]) -> float:
-        """计算综合鲁棒性分数"""
         clean_mae = metrics['clean_performance'].get('mae', 1.0)
         
         # 对抗鲁棒性分数
@@ -1044,7 +1023,6 @@ class RobustTrainingOrchestrator:
 
 # 使用示例
 def example_usage():
-    """使用示例"""
     from cgcnn.enhanced_model import EnhancedCGCNN
     
     # 创建模型

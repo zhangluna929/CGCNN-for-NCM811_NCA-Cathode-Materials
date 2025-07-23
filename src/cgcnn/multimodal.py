@@ -64,7 +64,6 @@ class StructureEncoder(ModalityEncoder):
     
     def forward(self, atom_fea: torch.Tensor, nbr_fea: torch.Tensor, 
                 nbr_fea_idx: torch.Tensor, crystal_atom_idx: List[torch.Tensor]) -> torch.Tensor:
-        """前向传播"""
         # 图卷积
         atom_fea = self.embedding(atom_fea)
         for conv_func in self.convs:
@@ -78,7 +77,6 @@ class StructureEncoder(ModalityEncoder):
         return encoded
     
     def pooling(self, atom_fea: torch.Tensor, crystal_atom_idx: List[torch.Tensor]) -> torch.Tensor:
-        """池化操作"""
         assert sum([len(idx_map) for idx_map in crystal_atom_idx]) == atom_fea.data.shape[0]
         summed_fea = [torch.mean(atom_fea[idx_map], dim=0, keepdim=True)
                       for idx_map in crystal_atom_idx]
@@ -107,7 +105,6 @@ class CompositionEncoder(ModalityEncoder):
         )
     
     def forward(self, composition_features: torch.Tensor) -> torch.Tensor:
-        """前向传播"""
         return self.encoder(composition_features)
 
 
@@ -172,7 +169,6 @@ class PhysicalPropertyEncoder(ModalityEncoder):
         )
     
     def forward(self, properties: torch.Tensor) -> torch.Tensor:
-        """前向传播"""
         return self.encoder(properties)
 
 
@@ -484,7 +480,6 @@ class StructureSequenceCGCNN(nn.Module):
         return output
     
     def pooling(self, atom_fea: torch.Tensor, crystal_atom_idx: List[torch.Tensor]) -> torch.Tensor:
-        """池化操作"""
         assert sum([len(idx_map) for idx_map in crystal_atom_idx]) == atom_fea.data.shape[0]
         summed_fea = [torch.mean(atom_fea[idx_map], dim=0, keepdim=True)
                       for idx_map in crystal_atom_idx]
@@ -543,7 +538,6 @@ class MultiModalDataLoader:
 
 # 使用示例
 def example_usage():
-    """使用示例"""
     # 创建多模态模型
     model = MultiModalCGCNN(
         orig_atom_fea_len=92,

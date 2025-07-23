@@ -147,7 +147,6 @@ class CGCNNCalculator(Calculator):
         return data[:4]  # 返回 (atom_fea, nbr_fea, nbr_fea_idx, crystal_atom_idx)
     
     def _predict_energy(self, cgcnn_input: Tuple) -> float:
-        """预测能量"""
         atom_fea, nbr_fea, nbr_fea_idx, crystal_atom_idx = cgcnn_input
         
         # 转换为tensor并移动到设备
@@ -162,7 +161,6 @@ class CGCNNCalculator(Calculator):
         return energy.item()
     
     def _predict_energy_forces(self, cgcnn_input: Tuple, structure: Structure) -> Tuple[float, np.ndarray]:
-        """预测能量和力"""
         atom_fea, nbr_fea, nbr_fea_idx, crystal_atom_idx = cgcnn_input
         
         # 启用梯度计算
@@ -191,7 +189,6 @@ class CGCNNCalculator(Calculator):
         return energy.item(), forces
     
     def _predict_stress(self, cgcnn_input: Tuple, structure: Structure) -> np.ndarray:
-        """预测应力"""
         # 应力预测需要对晶格参数求导
         # 这里提供一个简化的实现框架
         
@@ -469,7 +466,6 @@ def create_ase_database(structures: List[Structure],
 
 # 使用示例
 def example_usage():
-    """使用示例"""
     if not ASE_AVAILABLE:
         print("ASE not available for example")
         return

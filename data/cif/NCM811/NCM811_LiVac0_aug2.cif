@@ -1,0 +1,47 @@
+# NCM811 Li vacancy structure - lunazhang 2023
+data_Li2.796Mn0.297Co0.297Ni2.61O6
+_symmetry_space_group_name_H-M   'P 1'
+_cell_length_a   2.87190000
+_cell_length_b   4.64504892
+_cell_length_c   14.19750000
+_cell_angle_alpha   90.00000000
+_cell_angle_beta   90.00000000
+_cell_angle_gamma   147.62634087
+_symmetry_Int_Tables_number   1
+_chemical_formula_structural   Li2.796Mn0.297Co0.297Ni2.61O6
+_chemical_formula_sum   'Li2.796 Mn0.297 Co0.297 Ni2.61 O6'
+_cell_volume   101.41008257
+_cell_formula_units_Z   1
+loop_
+ _symmetry_equiv_pos_site_id
+ _symmetry_equiv_pos_as_xyz
+  1  'x, y, z'
+loop_
+ _atom_site_type_symbol
+ _atom_site_label
+ _atom_site_symmetry_multiplicity
+ _atom_site_fract_x
+ _atom_site_fract_y
+ _atom_site_fract_z
+ _atom_site_occupancy
+  Li  Ni_fix4  1  0.33333333  0.66666667  0.66666667  0.932
+  Ni  Ni_fix4  1  0.33333333  0.66666667  0.66666667  0.068
+  Li  Ni_fix4  1  0.00000000  0.00000000  0.00000000  0.932
+  Ni  Ni_fix4  1  0.00000000  0.00000000  0.00000000  0.068
+  Li  Ni_fix4  1  0.66666667  0.33333333  0.33333333  0.932
+  Ni  Ni_fix4  1  0.66666667  0.33333333  0.33333333  0.068
+  Mn  Mn_fix2  1  0.33333333  0.66666667  0.16666667  0.099
+  Co  Mn_fix2  1  0.33333333  0.66666667  0.16666667  0.099
+  Ni  Mn_fix2  1  0.33333333  0.66666667  0.16666667  0.802
+  Mn  Mn_fix2  1  0.00000000  0.00000000  0.50000000  0.099
+  Co  Mn_fix2  1  0.00000000  0.00000000  0.50000000  0.099
+  Ni  Mn_fix2  1  0.00000000  0.00000000  0.50000000  0.802
+  Mn  Mn_fix2  1  0.66666667  0.33333333  0.83333333  0.099
+  Co  Mn_fix2  1  0.66666667  0.33333333  0.83333333  0.099
+  Ni  Mn_fix2  1  0.66666667  0.33333333  0.83333333  0.802
+  O  O15  1  0.33333333  0.66666667  0.90766667  1.0
+  O  O16  1  0.00000000  0.00000000  0.24100000  1.0
+  O  O17  1  0.66666667  0.33333333  0.57433333  1.0
+  O  O18  1  0.00000000  0.00000000  0.75900000  1.0
+  O  O19  1  0.33333333  0.66666667  0.42566667  1.0
+  O  O20  1  0.66666667  0.33333333  0.09233333  1.0

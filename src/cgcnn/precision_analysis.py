@@ -51,7 +51,6 @@ class MaterialPropertyMatrix:
         self._initialize_matrices()
     
     def _initialize_matrices(self):
-        """初始化各种矩阵"""
         for material in self.materials:
             self.precision_matrix[material] = {}
             self.uncertainty_matrix[material] = {}
@@ -94,7 +93,7 @@ class MaterialPropertyMatrix:
         if len(predictions) != len(targets):
             raise ValueError("Predictions and targets must have the same length")
         
-        # 计算精度指标
+
         mae = mean_absolute_error(targets, predictions)
         rmse = np.sqrt(mean_squared_error(targets, predictions))
         r2 = r2_score(targets, predictions)
@@ -380,7 +379,6 @@ class StratifiedPrecisionEvaluator:
             return 'pristine'
     
     def _calculate_metrics(self, predictions: np.ndarray, targets: np.ndarray) -> Dict[str, float]:
-        """计算评估指标"""
         if len(predictions) == 0:
             return {}
         
@@ -568,7 +566,6 @@ class MechanicalPropertyOptimizer:
     
     def _calculate_physics_constraints(self, predictions: Dict[str, torch.Tensor],
                                      targets: Dict[str, torch.Tensor]) -> torch.Tensor:
-        """计算物理约束损失"""
         constraints_loss = torch.tensor(0.0, device=list(predictions.values())[0].device)
         
         # 弹性模量约束：K > 0, G > 0, K > G
@@ -594,7 +591,6 @@ class MechanicalPropertyOptimizer:
     
     def _calculate_correlation_loss(self, predictions: Dict[str, torch.Tensor],
                                   targets: Dict[str, torch.Tensor]) -> torch.Tensor:
-        """计算相关性保持损失"""
         correlation_loss = torch.tensor(0.0, device=list(predictions.values())[0].device)
         
         # 已知的物理相关性
@@ -669,7 +665,6 @@ class MechanicalPropertyOptimizer:
 
 # 使用示例
 def example_usage():
-    """使用示例"""
     # 创建精度矩阵
     precision_matrix = MaterialPropertyMatrix()
     

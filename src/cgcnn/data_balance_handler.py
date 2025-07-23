@@ -112,7 +112,6 @@ class MaterialsSMOTE:
     
     def _generate_synthetic_samples(self, minority_X: np.ndarray, n_samples: int,
                                   k_neighbors: int, structure_info: Optional[List[Dict]]) -> np.ndarray:
-        """生成合成样本"""
         if len(minority_X) < 2:
             return np.array([]).reshape(0, minority_X.shape[1])
         
@@ -151,7 +150,6 @@ class MaterialsSMOTE:
         return np.array(synthetic_samples)
     
     def _apply_physical_constraints(self, sample: np.ndarray) -> np.ndarray:
-        """应用物理约束"""
         constrained_sample = sample.copy()
         
         # 应用特征约束
@@ -165,7 +163,6 @@ class MaterialsSMOTE:
         return constrained_sample
     
     def _apply_materials_constraints(self, sample: np.ndarray) -> np.ndarray:
-        """应用材料特定约束"""
         # 这里可以添加材料科学的具体约束
         # 例如：确保原子比例合理、键长在合理范围内等
         
@@ -190,7 +187,6 @@ class PhysicsConstrainedDataGenerator:
         self.logger = logging.getLogger(__name__)
     
     def _default_generation_rules(self) -> Dict[str, Any]:
-        """默认生成规则"""
         return {
             'formation_energy': {
                 'min_value': -6.0,
@@ -239,7 +235,6 @@ class PhysicsConstrainedDataGenerator:
     
     def _generate_single_defect_sample(self, defect_type: str, base_material: str, 
                                      sample_id: int) -> Dict[str, Any]:
-        """生成单个缺陷样本"""
         # 基础结构参数
         base_params = self._get_base_material_params(base_material)
         
@@ -261,7 +256,6 @@ class PhysicsConstrainedDataGenerator:
         return sample
     
     def _get_base_material_params(self, material: str) -> Dict[str, Any]:
-        """获取基础材料参数"""
         base_params = {
             'NCM811': {
                 'lattice_a': 2.87,
@@ -283,7 +277,6 @@ class PhysicsConstrainedDataGenerator:
     
     def _generate_li_vacancy_sample(self, base_params: Dict[str, Any], 
                                   sample_id: int) -> Dict[str, Any]:
-        """生成锂空位样本"""
         # 基于已知的物理关系生成特征
         vacancy_concentration = np.random.uniform(0.05, 0.3)  # 5-30%空位浓度
         
@@ -327,7 +320,6 @@ class PhysicsConstrainedDataGenerator:
     
     def _generate_ni_migration_sample(self, base_params: Dict[str, Any], 
                                     sample_id: int) -> Dict[str, Any]:
-        """生成镍迁移样本"""
         migration_fraction = np.random.uniform(0.01, 0.15)  # 1-15%迁移
         
         # 形成能大幅增加（迁移是高能过程）
@@ -368,7 +360,6 @@ class PhysicsConstrainedDataGenerator:
     
     def _generate_o_vacancy_sample(self, base_params: Dict[str, Any], 
                                  sample_id: int) -> Dict[str, Any]:
-        """生成氧空位样本"""
         vacancy_concentration = np.random.uniform(0.01, 0.1)  # 1-10%氧空位
         
         # 氧空位对性质的影响
@@ -408,7 +399,6 @@ class PhysicsConstrainedDataGenerator:
     
     def _generate_complex_defect_sample(self, base_params: Dict[str, Any], 
                                       sample_id: int) -> Dict[str, Any]:
-        """生成复合缺陷样本"""
         # 复合缺陷：同时包含多种缺陷类型
         li_vacancy_conc = np.random.uniform(0.02, 0.15)
         ni_migration_conc = np.random.uniform(0.005, 0.05)
@@ -452,7 +442,6 @@ class PhysicsConstrainedDataGenerator:
     
     def _generate_atom_features_with_vacancy(self, base_params: Dict[str, Any], 
                                            vacancy_conc: float) -> np.ndarray:
-        """生成带空位的原子特征"""
         # 简化的原子特征生成
         n_atoms = 20  # 假设超胞中有20个原子
         n_features = 92  # 原子特征维度
@@ -471,7 +460,6 @@ class PhysicsConstrainedDataGenerator:
     
     def _generate_atom_features_with_migration(self, base_params: Dict[str, Any], 
                                              migration_frac: float) -> np.ndarray:
-        """生成带迁移的原子特征"""
         n_atoms = 20
         n_features = 92
         
@@ -488,7 +476,6 @@ class PhysicsConstrainedDataGenerator:
     
     def _generate_atom_features_with_o_vacancy(self, base_params: Dict[str, Any], 
                                              vacancy_conc: float) -> np.ndarray:
-        """生成带氧空位的原子特征"""
         n_atoms = 20
         n_features = 92
         
@@ -512,7 +499,6 @@ class PhysicsConstrainedDataGenerator:
     
     def _generate_neighbor_features_with_defect(self, base_params: Dict[str, Any], 
                                               defect_type: str, defect_conc: float) -> np.ndarray:
-        """生成带缺陷的邻居特征"""
         n_atoms = 20
         max_neighbors = 12
         n_nbr_features = 41
@@ -558,7 +544,6 @@ class PhysicsConstrainedDataGenerator:
     
     def _apply_physics_constraints(self, sample: Dict[str, Any], 
                                  defect_type: str) -> Dict[str, Any]:
-        """应用物理约束"""
         # 确保形成能合理
         if sample['formation_energy'] < -6.0:
             sample['formation_energy'] = -6.0 + np.random.uniform(0, 0.5)
@@ -642,7 +627,6 @@ class WeightedLossHandler:
     
     def create_weighted_loss_function(self, class_weights: Dict[Any, float],
                                     base_loss: str = 'mse') -> nn.Module:
-        """创建加权损失函数"""
         if base_loss == 'mse':
             return WeightedMSELoss(class_weights)
         elif base_loss == 'cross_entropy':
@@ -678,7 +662,6 @@ class WeightedMSELoss(nn.Module):
 
 
 class WeightedCrossEntropyLoss(nn.Module):
-    """加权交叉熵损失"""
     
     def __init__(self, class_weights: Dict[Any, float]):
         super(WeightedCrossEntropyLoss, self).__init__()
@@ -778,7 +761,6 @@ class DataBalanceOrchestrator:
     
     def _generation_only_balance(self, X: np.ndarray, y: np.ndarray,
                                target_ratio: float) -> Tuple[np.ndarray, np.ndarray]:
-        """仅使用生成方法平衡"""
         class_counts = Counter(y)
         majority_class = max(class_counts, key=class_counts.get)
         target_samples = int(class_counts[majority_class] * target_ratio)
@@ -814,7 +796,6 @@ class DataBalanceOrchestrator:
     def _combined_balance(self, X: np.ndarray, y: np.ndarray,
                         structure_info: Optional[List[Dict]],
                         target_ratio: float) -> Tuple[np.ndarray, np.ndarray]:
-        """组合方法平衡"""
         # 第一步：使用SMOTE
         X_smote, y_smote = self.materials_smote.fit_resample(X, y, structure_info)
         
@@ -845,7 +826,6 @@ class DataBalanceOrchestrator:
         return X_final, y_final
     
     def _convert_generated_to_features(self, generated_samples: List[Dict]) -> np.ndarray:
-        """将生成的样本转换为特征矩阵"""
         # 简化的转换过程
         feature_matrix = []
         
@@ -880,7 +860,6 @@ class DataBalanceOrchestrator:
         return np.array(feature_matrix)
     
     def _infer_defect_type_from_label(self, class_label: Any) -> str:
-        """从类别标签推断缺陷类型"""
         label_str = str(class_label).lower()
         
         if 'li' in label_str and 'vac' in label_str:
@@ -895,7 +874,6 @@ class DataBalanceOrchestrator:
 
 # 使用示例
 def example_usage():
-    """使用示例"""
     # 创建模拟不平衡数据
     np.random.seed(42)
     

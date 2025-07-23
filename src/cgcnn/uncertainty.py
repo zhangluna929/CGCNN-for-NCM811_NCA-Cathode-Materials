@@ -41,7 +41,6 @@ class BayesianLinear(nn.Module):
         self.reset_parameters()
     
     def reset_parameters(self):
-        """初始化参数"""
         nn.init.kaiming_uniform_(self.weight_mu, a=math.sqrt(5))
         nn.init.constant_(self.weight_rho, -3)
         nn.init.uniform_(self.bias_mu, -0.1, 0.1)
@@ -49,11 +48,8 @@ class BayesianLinear(nn.Module):
     
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """前向传播，采样权重"""
-        # 计算权重标准差
         weight_std = torch.log1p(torch.exp(self.weight_rho))
         bias_std = torch.log1p(torch.exp(self.bias_rho))
-        
-        # 采样权重和偏置
         weight_eps = torch.randn_like(self.weight_mu)
         bias_eps = torch.randn_like(self.bias_mu)
         
@@ -63,7 +59,6 @@ class BayesianLinear(nn.Module):
         return F.linear(x, weight, bias)
     
     def kl_divergence(self) -> torch.Tensor:
-        """计算KL散度"""
         weight_std = torch.log1p(torch.exp(self.weight_rho))
         bias_std = torch.log1p(torch.exp(self.bias_rho))
         
@@ -120,7 +115,6 @@ class BayesianCGCNN(nn.Module):
             self.dropout = nn.Dropout()
     
     def forward(self, atom_fea, nbr_fea, nbr_fea_idx, crystal_atom_idx):
-        """前向传播"""
         atom_fea = self.embedding(atom_fea)
         for conv_func in self.convs:
             atom_fea = conv_func(atom_fea, nbr_fea, nbr_fea_idx)
@@ -141,7 +135,6 @@ class BayesianCGCNN(nn.Module):
         return out
     
     def pooling(self, atom_fea, crystal_atom_idx):
-        """池化操作"""
         assert sum([len(idx_map) for idx_map in crystal_atom_idx]) == atom_fea.data.shape[0]
         summed_fea = [torch.mean(atom_fea[idx_map], dim=0, keepdim=True)
                       for idx_map in crystal_atom_idx]
@@ -265,7 +258,6 @@ class CalibrationModule:
         self.calibrator = None
     
     def fit(self, logits: torch.Tensor, targets: torch.Tensor):
-        """训练校准器"""
         if self.method == 'temperature_scaling':
             self.calibrator = self._fit_temperature_scaling(logits, targets)
         elif self.method == 'platt_scaling':
@@ -274,7 +266,6 @@ class CalibrationModule:
             raise ValueError(f"Unknown calibration method: {self.method}")
     
     def _fit_temperature_scaling(self, logits: torch.Tensor, targets: torch.Tensor) -> nn.Module:
-        """温度缩放校准"""
         class TemperatureScaling(nn.Module):
             def __init__(self):
                 super().__init__()
@@ -319,7 +310,6 @@ class CalibrationModule:
         return platt_model
     
     def calibrate(self, logits: torch.Tensor) -> torch.Tensor:
-        """应用校准"""
         if self.calibrator is None:
             raise ValueError("Calibrator not fitted")
         
@@ -376,14 +366,12 @@ class UncertaintyMetrics:
     
     @staticmethod
     def predictive_entropy(predictions: torch.Tensor) -> torch.Tensor:
-        """计算预测熵"""
         mean_probs = torch.mean(predictions, dim=0)
         entropy = -torch.sum(mean_probs * torch.log(mean_probs + 1e-8), dim=-1)
         return entropy
     
     @staticmethod
     def variance_ratio(predictions: torch.Tensor) -> torch.Tensor:
-        """计算方差比率"""
         mean_probs = torch.mean(predictions, dim=0)
         max_prob = torch.max(mean_probs, dim=-1)[0]
         return 1 - max_prob
@@ -412,7 +400,6 @@ def create_ensemble_from_checkpoints(checkpoint_paths: List[str], model_config: 
 
 # 使用示例
 def example_usage():
-    """使用示例"""
     # 创建贝叶斯CGCNN
     bayesian_model = BayesianCGCNN(
         orig_atom_fea_len=92,
@@ -425,13 +412,13 @@ def example_usage():
         prior_std=1.0
     )
     
-    # 贝叶斯训练损失函数
+    
     def bayesian_loss(model, output, target, kl_weight=1e-6):
         mse_loss = F.mse_loss(output, target)
         kl_loss = model.kl_divergence()
         return mse_loss + kl_weight * kl_loss
     
-    # 不确定性预测
+    
     # mean, std = bayesian_model.predict_with_uncertainty(
     #     atom_fea, nbr_fea, nbr_fea_idx, crystal_atom_idx, n_samples=100
     # ) 

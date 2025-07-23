@@ -98,7 +98,6 @@ class UncertaintyDecomposer:
         }
     
     def _ensemble_decomposition(self, input_data: Tuple) -> Dict[str, torch.Tensor]:
-        """集成模型分解"""
         if not isinstance(self.model, EnsembleCGCNN):
             raise ValueError("Ensemble decomposition requires EnsembleCGCNN model")
         
@@ -116,7 +115,6 @@ class UncertaintyDecomposer:
         }
     
     def _variational_decomposition(self, input_data: Tuple) -> Dict[str, torch.Tensor]:
-        """变分推断分解"""
         if not isinstance(self.model, BayesianCGCNN):
             raise ValueError("Variational decomposition requires BayesianCGCNN model")
         
@@ -150,7 +148,6 @@ class UncertaintyDecomposer:
     
     def _estimate_aleatoric_uncertainty(self, input_data: Tuple, 
                                       predictions: torch.Tensor) -> torch.Tensor:
-        """估计偶然不确定性"""
         # 简化的偶然不确定性估计
         # 实际应用中可能需要专门的噪声建模
         
@@ -182,7 +179,6 @@ class UncertaintyDecomposer:
         return aleatoric_std * torch.ones(batch_size, output_dim, device=predictions.device)
     
     def _model_aleatoric_variance(self, input_data: Tuple) -> torch.Tensor:
-        """建模偶然方差"""
         # 这里可以实现更复杂的偶然不确定性建模
         # 例如，基于输入特征预测噪声水平
         
@@ -295,7 +291,6 @@ class UncertaintyGuidedActiveLearning:
             raise ValueError(f"Unknown acquisition strategy: {self.acquisition_strategy}")
     
     def _uncertainty_sampling(self, candidate_pool: List[Any], n_samples: int) -> List[int]:
-        """不确定性采样"""
         uncertainties = []
         
         for i, candidate in enumerate(candidate_pool):
@@ -311,7 +306,6 @@ class UncertaintyGuidedActiveLearning:
         return selected_indices
     
     def _diverse_uncertainty_sampling(self, candidate_pool: List[Any], n_samples: int) -> List[int]:
-        """多样性不确定性采样"""
         if not SKLEARN_AVAILABLE:
             # 如果sklearn不可用，回退到简单不确定性采样
             return self._uncertainty_sampling(candidate_pool, n_samples)
@@ -362,7 +356,6 @@ class UncertaintyGuidedActiveLearning:
         return selected_indices[:n_samples]
     
     def _expected_improvement_sampling(self, candidate_pool: List[Any], n_samples: int) -> List[int]:
-        """期望改进采样"""
         # 实现期望改进采样策略
         expected_improvements = []
         
@@ -386,7 +379,6 @@ class UncertaintyGuidedActiveLearning:
         return selected_indices
     
     def _thompson_sampling(self, candidate_pool: List[Any], n_samples: int) -> List[int]:
-        """汤普森采样"""
         n_thompson_samples = self.strategy_configs['thompson_sampling']['n_samples']
         
         # 为每个候选样本生成多个预测采样
@@ -645,7 +637,6 @@ class HighUncertaintySampleProcessor:
 
 # 使用示例
 def example_usage():
-    """使用示例"""
     # 创建贝叶斯CGCNN模型
     model = BayesianCGCNN(
         orig_atom_fea_len=92,

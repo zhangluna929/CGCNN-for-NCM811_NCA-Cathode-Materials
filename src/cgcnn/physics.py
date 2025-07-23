@@ -213,7 +213,6 @@ class SymmetryConstraints:
     
     def _apply_translation_to_features(self, atom_features: torch.Tensor,
                                      translation: torch.Tensor) -> torch.Tensor:
-        """应用平移到原子特征"""
         if atom_features.shape[-1] >= 3:
             translated_features = atom_features.clone()
             translated_features[:, :3] += translation
@@ -537,7 +536,6 @@ def generate_symmetry_operations(space_group_number: int) -> List[torch.Tensor]:
 
 # 使用示例
 def example_usage():
-    """使用示例"""
     # 创建物理约束损失函数
     physics_loss = PhysicsConstrainedLoss(
         conservation_weight=0.1,

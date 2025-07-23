@@ -370,7 +370,7 @@ class MaterialsProjectAPI:
         if not predictions:
             return {'error': 'No valid predictions obtained'}
         
-        # 计算统计指标
+
         import numpy as np
         from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
         
@@ -513,7 +513,6 @@ class MaterialsProjectAPI:
 
 # 使用示例
 def example_usage():
-    """使用示例"""
     if not MP_API_AVAILABLE:
         print("Materials Project API not available for example")
         return

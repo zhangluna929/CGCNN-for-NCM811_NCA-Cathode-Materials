@@ -131,7 +131,7 @@ class StructuralInstabilityAnalyzer:
                 if distance < 2.5:  # 临界距离
                     tm_in_li_layer += 1
         
-        # 计算迁移概率指标
+
         migration_probability = tm_in_li_layer / len(tm_sites) if tm_sites else 0.0
         
         return {
@@ -549,7 +549,7 @@ class ComprehensiveHighNiAnalyzer:
     
     def _calculate_performance_indicators(self, analysis_results: Dict[str, Any]) -> Dict[str, float]:
         """
-        计算综合性能指标
+
         Calculate comprehensive performance indicators
         """
         indicators = {}
@@ -650,7 +650,6 @@ class ComprehensiveHighNiAnalyzer:
 
 # 使用示例
 def example_usage():
-    """使用示例"""
     if not PYMATGEN_AVAILABLE:
         print("PyMatGen not available. Please install: pip install pymatgen")
         return
@@ -658,7 +657,7 @@ def example_usage():
     # 创建分析器
     analyzer = ComprehensiveHighNiAnalyzer()
     
-    # 加载结构文件
+    
     # structure = Structure.from_file('NCM811.cif')
     # vacancy_structure = Structure.from_file('NCM811_LiVac0.cif')
     

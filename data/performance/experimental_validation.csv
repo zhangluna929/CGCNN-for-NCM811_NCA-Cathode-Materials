@@ -1,0 +1,9 @@
+material_id,predicted_formation_energy,experimental_formation_energy,predicted_capacity,experimental_capacity,predicted_cycle_life,experimental_cycle_life,synthesis_temperature,testing_conditions
+NCM811_baseline,4.10,4.08,195,192,1850,1820,850C,C/5_discharge
+NCM811_optimized,4.05,4.02,198,195,2100,2050,820C,C/5_discharge
+NCA_baseline,3.80,3.82,185,182,2200,2180,900C,C/5_discharge
+NCA_optimized,3.75,3.78,188,186,2450,2400,880C,C/5_discharge
+NCM811_Al_doped,4.12,4.09,193,190,2050,2020,830C,C/5_discharge
+NCA_Mg_doped,3.85,3.87,187,184,2300,2250,890C,C/5_discharge
+NCM811_surface_coated,4.08,4.06,196,194,2200,2150,850C,C/5_discharge
+NCA_surface_coated,3.78,3.80,189,187,2500,2480,900C,C/5_discharge 

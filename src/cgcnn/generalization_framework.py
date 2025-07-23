@@ -34,7 +34,6 @@ except ImportError:
 
 @dataclass
 class ValidationResult:
-    """验证结果数据类"""
     fold_id: int
     validation_type: str
     material_type: Optional[str]
@@ -48,7 +47,6 @@ class ValidationResult:
 
 @dataclass
 class PerformanceAlert:
-    """性能警报数据类"""
     alert_type: str
     severity: str  # 'low', 'medium', 'high', 'critical'
     message: str
@@ -140,7 +138,6 @@ class StratifiedMaterialValidator:
         return folds
     
     def _extract_material_labels(self, dataset: List[Any]) -> List[str]:
-        """提取材料类型标签"""
         labels = []
         for sample in dataset:
             # 假设样本包含CIF ID信息
@@ -166,7 +163,6 @@ class StratifiedMaterialValidator:
         return labels
     
     def _extract_defect_labels(self, dataset: List[Any]) -> List[str]:
-        """提取缺陷类型标签"""
         labels = []
         for sample in dataset:
             # 从样本中提取缺陷信息
@@ -189,7 +185,6 @@ class StratifiedMaterialValidator:
         return labels
     
     def _extract_property_range_labels(self, dataset: List[Any]) -> List[str]:
-        """根据性质值范围提取标签"""
         # 这里需要根据实际的目标性质进行调整
         labels = []
         for sample in dataset:
@@ -217,7 +212,6 @@ class StratifiedMaterialValidator:
         return labels
     
     def _extract_crystal_system_groups(self, dataset: List[Any]) -> List[str]:
-        """提取晶系分组"""
         # 简化实现：基于材料类型推断晶系
         material_labels = self._extract_material_labels(dataset)
         
@@ -231,7 +225,6 @@ class StratifiedMaterialValidator:
         return crystal_systems
     
     def _extract_composition_groups(self, dataset: List[Any]) -> List[str]:
-        """提取成分族群"""
         material_labels = self._extract_material_labels(dataset)
         
         composition_groups = []
@@ -246,7 +239,6 @@ class StratifiedMaterialValidator:
         return composition_groups
     
     def _handle_rare_classes(self, labels: List[str]) -> List[str]:
-        """处理稀有类别"""
         from collections import Counter
         
         label_counts = Counter(labels)
@@ -337,7 +329,6 @@ class TemporalValidator:
         return sliding_splits
     
     def _extract_timestamps(self, dataset: List[Any], time_column: str) -> np.ndarray:
-        """提取时间戳"""
         timestamps = []
         
         for i, sample in enumerate(dataset):
@@ -376,7 +367,7 @@ class TemporalValidator:
             for metric_name, metric_value in result.metric_values.items():
                 metrics_over_time[metric_name].append(metric_value)
         
-        # 计算稳定性指标
+
         stability_analysis = {
             'temporal_trend': {},
             'volatility': {},
@@ -428,7 +419,6 @@ class PerformanceMonitor:
         self.logger = logging.getLogger(__name__)
     
     def _default_thresholds(self) -> Dict[str, Dict[str, float]]:
-        """默认预警阈值"""
         return {
             'mae': {
                 'warning': 0.1,
@@ -477,7 +467,6 @@ class PerformanceMonitor:
     
     def _check_alerts(self, metric_name: str, metric_value: float, 
                      timestamp: float, context: Optional[Dict[str, Any]]):
-        """检查预警条件"""
         if metric_name not in self.alert_thresholds:
             return
         
@@ -531,7 +520,6 @@ class PerformanceMonitor:
     
     def _check_trend_alert(self, metric_name: str, timestamp: float, 
                           context: Optional[Dict[str, Any]]) -> Optional[PerformanceAlert]:
-        """检查趋势预警"""
         history = self.performance_history[metric_name]
         
         if len(history) < 5:  # 需要足够的历史数据
@@ -568,7 +556,6 @@ class PerformanceMonitor:
     
     def _check_anomaly_alert(self, metric_name: str, metric_value: float,
                            timestamp: float, context: Optional[Dict[str, Any]]) -> Optional[PerformanceAlert]:
-        """检查异常值预警"""
         history = self.performance_history[metric_name]
         
         if len(history) < 5:
@@ -597,7 +584,6 @@ class PerformanceMonitor:
                      current_value: float, threshold_value: float,
                      timestamp: float, context: Optional[Dict[str, Any]],
                      message: str) -> PerformanceAlert:
-        """创建预警"""
         return PerformanceAlert(
             alert_type=alert_type,
             severity=severity,
@@ -610,7 +596,6 @@ class PerformanceMonitor:
         )
     
     def _handle_alert(self, alert: PerformanceAlert):
-        """处理预警"""
         # 记录预警
         self.alerts_history.append(alert)
         
@@ -625,11 +610,9 @@ class PerformanceMonitor:
                 self.logger.error(f"Alert callback error: {e}")
     
     def register_alert_callback(self, callback: Callable[[PerformanceAlert], None]):
-        """注册预警回调函数"""
         self.alert_callbacks.append(callback)
     
     def get_performance_summary(self) -> Dict[str, Any]:
-        """获取性能摘要"""
         summary = {
             'metrics_summary': {},
             'recent_alerts': [],
@@ -666,7 +649,6 @@ class PerformanceMonitor:
         return summary
     
     def _calculate_simple_trend(self, values: List[float]) -> str:
-        """计算简单趋势"""
         if len(values) < 2:
             return 'stable'
         
@@ -757,7 +739,6 @@ class GeneralizationFramework:
         return validation_summary
     
     def _run_stratified_validation(self, dataset: List[Any]) -> Dict[str, Any]:
-        """运行分层验证"""
         results = {'fold_results': [], 'summary': {}}
         
         # 创建分层折叠
@@ -791,7 +772,6 @@ class GeneralizationFramework:
         return results
     
     def _run_temporal_validation(self, dataset: List[Any]) -> Dict[str, Any]:
-        """运行时间序列验证"""
         results = {'split_results': [], 'summary': {}, 'stability_analysis': {}}
         
         # 创建时间序列分割
@@ -828,7 +808,6 @@ class GeneralizationFramework:
         return results
     
     def _run_group_validation(self, dataset: List[Any]) -> Dict[str, Any]:
-        """运行基于组的验证"""
         results = {'group_results': [], 'summary': {}}
         
         # 创建基于组的折叠
@@ -862,7 +841,6 @@ class GeneralizationFramework:
     def _evaluate_fold(self, dataset: List[Any], train_idx: List[int], 
                       val_idx: List[int], fold_id: int, 
                       validation_type: str) -> ValidationResult:
-        """评估单个折叠"""
         start_time = time.time()
         
         # 简化的模型评估（实际应用中需要完整的训练和评估流程）
@@ -872,7 +850,7 @@ class GeneralizationFramework:
         predictions = np.random.normal(0, 0.1, len(val_idx))
         targets = np.random.normal(0, 0.05, len(val_idx))
         
-        # 计算指标
+
         mae = mean_absolute_error(targets, predictions)
         rmse = np.sqrt(mean_squared_error(targets, predictions))
         r2 = max(0, r2_score(targets, predictions))  # 确保R²不为负
@@ -901,7 +879,6 @@ class GeneralizationFramework:
         )
     
     def _update_performance_monitoring(self, results: Dict[str, Any], validation_type: str):
-        """更新性能监控"""
         if 'summary' in results:
             for metric_name, metric_stats in results['summary'].items():
                 if isinstance(metric_stats, dict) and 'mean' in metric_stats:
@@ -912,7 +889,6 @@ class GeneralizationFramework:
                     )
     
     def _calculate_generalization_score(self, all_results: Dict[str, Any]) -> float:
-        """计算综合泛化分数"""
         scores = []
         
         for val_type, results in all_results.items():
@@ -932,7 +908,6 @@ class GeneralizationFramework:
         return np.mean(scores) if scores else 0.0
     
     def _save_validation_results(self, validation_summary: Dict[str, Any]):
-        """保存验证结果"""
         timestamp = int(time.time())
         filename = f"validation_results_{timestamp}.json"
         
@@ -948,7 +923,6 @@ class GeneralizationFramework:
             self.logger.error(f"Failed to save validation results: {e}")
     
     def _make_serializable(self, obj: Any) -> Any:
-        """使对象可序列化"""
         if isinstance(obj, dict):
             return {k: self._make_serializable(v) for k, v in obj.items()}
         elif isinstance(obj, list):
@@ -970,7 +944,6 @@ class GeneralizationFramework:
             return obj
     
     def generate_validation_report(self, validation_summary: Dict[str, Any]) -> str:
-        """生成验证报告"""
         report = f"""
 === 模型泛化能力验证报告 ===
 验证时间: {time.strftime('%Y-%m-%d %H:%M:%S')}
@@ -1002,7 +975,6 @@ class GeneralizationFramework:
 
 # 使用示例
 def example_usage():
-    """使用示例"""
     from cgcnn.enhanced_model import EnhancedCGCNN
     
     # 创建模型

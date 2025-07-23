@@ -1,0 +1,154 @@
+{
+  "training_info": {
+    "model_type": "CGCNN",
+    "dataset": "NCM811_NCA_Materials_Project",
+    "training_date": "2023-11-15",
+    "total_epochs": 100,
+    "batch_size": 256,
+    "learning_rate": 0.001,
+    "optimizer": "Adam"
+  },
+  "training_progress": {
+    "epoch_10": {
+      "train_loss": 0.245,
+      "val_loss": 0.287,
+      "train_mae": 0.156,
+      "val_mae": 0.178,
+      "learning_rate": 0.001
+    },
+    "epoch_20": {
+      "train_loss": 0.198,
+      "val_loss": 0.234,
+      "train_mae": 0.132,
+      "val_mae": 0.149,
+      "learning_rate": 0.001
+    },
+    "epoch_30": {
+      "train_loss": 0.167,
+      "val_loss": 0.201,
+      "train_mae": 0.118,
+      "val_mae": 0.135,
+      "learning_rate": 0.001
+    },
+    "epoch_40": {
+      "train_loss": 0.142,
+      "val_loss": 0.178,
+      "train_mae": 0.105,
+      "val_mae": 0.124,
+      "learning_rate": 0.001
+    },
+    "epoch_50": {
+      "train_loss": 0.125,
+      "val_loss": 0.162,
+      "train_mae": 0.095,
+      "val_mae": 0.116,
+      "learning_rate": 0.001
+    },
+    "epoch_60": {
+      "train_loss": 0.112,
+      "val_loss": 0.151,
+      "train_mae": 0.087,
+      "val_mae": 0.110,
+      "learning_rate": 0.001
+    },
+    "epoch_70": {
+      "train_loss": 0.103,
+      "val_loss": 0.143,
+      "train_mae": 0.082,
+      "val_mae": 0.106,
+      "learning_rate": 0.001
+    },
+    "epoch_80": {
+      "train_loss": 0.096,
+      "val_loss": 0.138,
+      "train_mae": 0.078,
+      "val_mae": 0.103,
+      "learning_rate": 0.001
+    },
+    "epoch_90": {
+      "train_loss": 0.091,
+      "val_loss": 0.135,
+      "train_mae": 0.075,
+      "val_mae": 0.101,
+      "learning_rate": 0.001
+    },
+    "epoch_100": {
+      "train_loss": 0.087,
+      "val_loss": 0.133,
+      "train_mae": 0.073,
+      "val_mae": 0.099,
+      "learning_rate": 0.001
+    }
+  },
+  "best_model": {
+    "epoch": 95,
+    "val_mae": 0.098,
+    "test_mae": 0.102,
+    "test_r2": 0.924,
+    "model_path": "model_best.pth.tar"
+  },
+  "property_specific_performance": {
+    "formation_energy": {
+      "mae": 0.098,
+      "rmse": 0.142,
+      "r2": 0.924,
+      "samples": 1250
+    },
+    "band_gap": {
+      "mae": 0.324,
+      "rmse": 0.456,
+      "r2": 0.847,
+      "samples": 1250
+    },
+    "elastic_modulus": {
+      "mae": 0.041,
+      "rmse": 0.063,
+      "r2": 0.891,
+      "samples": 1250
+    },
+    "fermi_level": {
+      "mae": 0.087,
+      "rmse": 0.125,
+      "r2": 0.812,
+      "samples": 1250
+    },
+    "poisson_ratio": {
+      "mae": 0.023,
+      "rmse": 0.034,
+      "r2": 0.756,
+      "samples": 1250
+    }
+  },
+  "active_learning_history": {
+    "iteration_1": {
+      "candidates_generated": 10,
+      "dft_validations": 3,
+      "best_formation_energy": 3.95,
+      "model_improvement": 0.012
+    },
+    "iteration_2": {
+      "candidates_generated": 15,
+      "dft_validations": 4,
+      "best_formation_energy": 3.88,
+      "model_improvement": 0.018
+    },
+    "iteration_3": {
+      "candidates_generated": 20,
+      "dft_validations": 5,
+      "best_formation_energy": 3.82,
+      "model_improvement": 0.025
+    },
+    "iteration_4": {
+      "candidates_generated": 25,
+      "dft_validations": 6,
+      "best_formation_energy": 3.78,
+      "model_improvement": 0.031
+    },
+    "iteration_5": {
+      "candidates_generated": 30,
+      "dft_validations": 8,
+      "best_formation_energy": 3.75,
+      "model_improvement": 0.038
+    }
+  }
+} 
